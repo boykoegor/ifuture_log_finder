@@ -2,9 +2,7 @@ package com.boyko.ifuture.log_finder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
-import java.awt.event.ActionListener;
 
 public class GUIWindow extends JFrame {
 
@@ -12,17 +10,28 @@ public class GUIWindow extends JFrame {
     private File selectedFile;
     private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
 
-
     GUIWindow() {
         super("Поисковик текста");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowAtCenter();
+        JPanel topPanel = getTopPanel();
 
         JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         panel.setLeftComponent(getTreePanel());
         panel.setRightComponent(getPreviewTabbedPanel());
 
+        Container window = this.getContentPane();
+        window.add(topPanel, BorderLayout.NORTH);
+        window.add(panel, BorderLayout.CENTER);
+    }
 
+    private JPanel getTopPanel() {
+        JPanel topPanel = new JPanel();
+        JLabel fileFormatLabel = new JLabel("Формат файла");
+        JLabel textLabel = new JLabel("Текст:");
+        JTextField text = new JTextField();
+        JLabel pathLabel = new JLabel("Путь:");
+        JTextField fileFormat = new JTextField(".log");
         JButton path = new JButton("...");
         path.addActionListener(e -> {
             JFileChooser wayChooser = new JFileChooser();
@@ -37,31 +46,21 @@ public class GUIWindow extends JFrame {
                     break;
                 case JFileChooser.ERROR_OPTION:
                     break;
-
             }
-
         });
-
 
         JButton search = new JButton("Искать");
         search.addActionListener(e -> {
             if (selectedFile != null) {
 
             }
-
-
         });
 
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        GroupLayout layout = new GroupLayout(topPanel);
+        topPanel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        JLabel fileFormatLabel = new JLabel("Формат файла");
-        JLabel textLabel = new JLabel("Текст:");
-        JTextField text = new JTextField();
-        JLabel pathLabel = new JLabel("Путь:");
-        JTextField fileFormat = new JTextField(".log");
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -76,7 +75,6 @@ public class GUIWindow extends JFrame {
                                         .addComponent(fileFormatLabel)
                                         .addComponent(fileFormat)))
                         .addComponent(search))
-                .addComponent(panel)
         );
 
         layout.linkSize(SwingConstants.HORIZONTAL, search, fileFormat, path);
@@ -93,13 +91,8 @@ public class GUIWindow extends JFrame {
                         .addGap(20)
                         .addComponent(fileFormatLabel)
                         .addComponent(fileFormat))
-                .addGroup(
-                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(panel)
-                )
         );
-
-
+        return topPanel;
     }
 
     private JPanel getPreviewTabbedPanel() {
@@ -145,7 +138,6 @@ public class GUIWindow extends JFrame {
     private void setWindowAtCenter() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
-        setBounds(dimension.width / 2 - WINDOW_SIZE.width/2, dimension.height / 2 - WINDOW_SIZE.height/2, WINDOW_SIZE.width, WINDOW_SIZE.height);
+        setBounds(dimension.width / 2 - WINDOW_SIZE.width / 2, dimension.height / 2 - WINDOW_SIZE.height / 2, WINDOW_SIZE.width, WINDOW_SIZE.height);
     }
-
 }
