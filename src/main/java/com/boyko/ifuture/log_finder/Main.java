@@ -1,8 +1,10 @@
 package com.boyko.ifuture.log_finder;
 
+import com.boyko.ifuture.log_finder.gui.MainWindow;
+
 public class Main {
     public static void main(String[] args) {
-        GUIWindow app = new GUIWindow();
+        MainWindow app = new MainWindow();
         app.setVisible(true);
     }
 }
