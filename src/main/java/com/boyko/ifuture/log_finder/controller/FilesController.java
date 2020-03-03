@@ -1,12 +1,13 @@
 package com.boyko.ifuture.log_finder.controller;
 
-import com.boyko.ifuture.log_finder.Main;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import java.io.File;
+import java.io.IOException;
 
 public class FilesController {
 
@@ -50,7 +51,11 @@ public class FilesController {
     }
 
     private static boolean isAppropriate(File file){
-        return file.getName().endsWith(".java");
-
+        try {
+            return FileUtils.readFileToString(file, "UTF-8").contains("isAppropriate");
+        } catch (IOException e) {
+            logger.error("Unable to check is file "+file.getName()+" appropriate"); //todo: check how to log exceptions
+        }
+        return false;
     }
 }
