@@ -1,10 +1,13 @@
 package com.boyko.ifuture.log_finder.gui;
 
+import com.boyko.ifuture.log_finder.EventListener;
+
 import javax.swing.*;
 import java.io.File;
 
 public class TopPanel extends JPanel {
 
+    private EventListener listener;
     private File selectedFile;
     private JLabel selectedPath = new JLabel("Путь не указан");
     private JLabel fileFormatLabel = new JLabel("Формат файла");
@@ -19,12 +22,17 @@ public class TopPanel extends JPanel {
 
         path.addActionListener(e -> selectPath(selectedPath));
         search.addActionListener(e -> {
-            if (selectedFile != null) {
 
-            }
+                listener.onSearchActivated(selectedPath.getText());
+
         });
 
         place();
+    }
+
+    public TopPanel(EventListener listener) {
+        this();
+        this.listener = listener;
     }
 
     private void place() {

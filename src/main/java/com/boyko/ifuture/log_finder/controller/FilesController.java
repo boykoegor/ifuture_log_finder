@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class FilesController {
 
+    private final static String encoding = "UTF-8";
     private final static Logger logger = Logger.getLogger(FilesController.class);
 
     public static TreeModel getTreeFiles(String filePath) {
@@ -30,7 +31,7 @@ public class FilesController {
                         haveAppropriateFiles = true;
                     }
                 }
-                if (haveAppropriateFiles){
+                if (haveAppropriateFiles) {
                     System.out.println("need this dir  " + filePath);
                     node.add(newChild);
                     return true;
@@ -39,7 +40,7 @@ public class FilesController {
                 logger.error("can't get list of files for path : " + file.getName());
             }
         } else {
-            if (isAppropriate(file)){
+            if (isAppropriate(file)) {
                 System.out.println("appropriate file = " + file.getName());
                 node.add(newChild);
                 return true;
@@ -50,12 +51,20 @@ public class FilesController {
         return false;
     }
 
-    private static boolean isAppropriate(File file){
+    private static boolean isAppropriate(File file) {
+            return  checkExtension(file) && checkContent(file);
+    }
+
+    private static boolean checkContent(File file) {
         try {
-            return FileUtils.readFileToString(file, "UTF-8").contains("isAppropriate");
+            return FileUtils.readFileToString(file, encoding).contains("isAppropriate");
         } catch (IOException e) {
-            logger.error("Unable to check is file "+file.getName()+" appropriate"); //todo: check how to log exceptions
+            logger.error("Unable to check is file " + file.getName() + " appropriate"); //todo: check how to log exceptions
         }
         return false;
+    }
+
+    private static boolean checkExtension(File file) {
+        return file.getName().endsWith(".java");
     }
 }

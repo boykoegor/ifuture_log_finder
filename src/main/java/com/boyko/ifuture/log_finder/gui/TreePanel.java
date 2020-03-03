@@ -6,13 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TreePanel extends JPanel {
+    private  JTree tree;
+    public void refresh(String path){
+
+        tree .setModel(FilesController.getTreeFiles(path));
+        System.out.println("nice");
+    }
 
     public TreePanel() {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(250, 400));
         JLabel countFiles = new JLabel("Текст обнаружен в данных файлах:");
         this.add(countFiles, BorderLayout.NORTH);
-        JTree tree = new JTree(FilesController.getTreeFiles("/Users/boyko.e.r/IdeaProjects/ifuture_log_finder/src/main"));
+        tree = new JTree(FilesController.getTreeFiles("/Users/boyko.e.r/IdeaProjects/ifuture_log_finder/src/main"));
         tree.setRootVisible(false);
         JScrollPane scrollPane = new JScrollPane(tree,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
