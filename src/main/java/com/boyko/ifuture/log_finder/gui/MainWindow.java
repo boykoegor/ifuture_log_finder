@@ -20,8 +20,8 @@ public class MainWindow extends JFrame {
 
         EventListener listener = new EventListener() {
             @Override
-            public void onSearchActivated(String path) {
-                tree.refresh(path);
+            public void onSearchActivated(String path, String extension) {
+                tree.refresh(path, extension);
             }
         };
         panel.setLeftComponent(tree);
