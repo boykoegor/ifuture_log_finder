@@ -2,10 +2,16 @@ package com.boyko.ifuture.log_finder.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.*;
 
 public class PreviewTabbedPanel extends JPanel {
 
     private JTabbedPane tabbedPane = new JTabbedPane();
+    final TextArea textOfFile = new TextArea();
 
     public PreviewTabbedPanel() {
 
@@ -15,7 +21,25 @@ public class PreviewTabbedPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(500, 400));
 
-        add.addActionListener(e -> addTab());
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FileReader reader = new FileReader("/Users/boyko.e.r/IdeaProjects/ifuture_log_finder/src/main/java/com/boyko/ifuture/log_finder/gui/MainWindow.java");
+                    BufferedReader br = new BufferedReader(reader);
+                    String line = br.readLine();
+                    while (line != null ){
+                        textOfFile.append(line + "\n");
+                        line = br.readLine();
+                    }
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                addTab();
+            }
+        });
         remove.addActionListener(e -> removeTab());
 
         JPanel buttons = new JPanel();
@@ -34,7 +58,10 @@ public class PreviewTabbedPanel extends JPanel {
     }
 
     private void addTab() {
-        tabbedPane.addTab("Вкладка ", new JPanel());
+        tabbedPane.addTab("Вкладка ", new JScrollPane(textOfFile));
     }
+
+
+
 
 }

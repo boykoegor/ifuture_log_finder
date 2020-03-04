@@ -21,7 +21,8 @@ public class TopPanel extends JPanel {
     public TopPanel() {
 
         path.addActionListener(e -> selectPath(selectedPath));
-        search.addActionListener(e -> listener.onSearchActivated(selectedPath.getText(), fileFormat.getText(), text.getText()));
+        search.addActionListener(e -> listener.onSearchActivated(selectedPath.getText(), fileFormat.getText(),
+                text.getText()));
         place();
     }
 

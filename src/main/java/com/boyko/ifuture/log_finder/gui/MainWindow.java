@@ -35,7 +35,8 @@ public class MainWindow extends JFrame {
     private void setWindowAtCenter() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension dimension = toolkit.getScreenSize();
-        setBounds(dimension.width / 2 - WINDOW_SIZE.width / 2, dimension.height / 2 - WINDOW_SIZE.height / 2, WINDOW_SIZE.width, WINDOW_SIZE.height);
+        setBounds(dimension.width / 2 - WINDOW_SIZE.width / 2, dimension.height / 2 - WINDOW_SIZE.height / 2,
+                WINDOW_SIZE.width, WINDOW_SIZE.height);
     }
 
 }
