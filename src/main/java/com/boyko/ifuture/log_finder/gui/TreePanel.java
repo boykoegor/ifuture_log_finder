@@ -3,9 +3,12 @@ package com.boyko.ifuture.log_finder.gui;
 import com.boyko.ifuture.log_finder.controller.FilesController;
 
 import javax.swing.*;
+import javax.swing.tree.TreePath;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class TreePanel extends JPanel {
+public class TreePanel extends JPanel implements MouseListener {
     private JTree tree;
 
     public void refresh(String path, String extension, String content) {
@@ -24,5 +27,36 @@ public class TreePanel extends JPanel {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scrollPane, BorderLayout.CENTER);
+        tree.addMouseListener(this);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            TreePath path = tree.getPathForLocation(e.getX(), e.getY());
+            if (path != null) {
+                System.out.println(path.getLastPathComponent().toString());
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
