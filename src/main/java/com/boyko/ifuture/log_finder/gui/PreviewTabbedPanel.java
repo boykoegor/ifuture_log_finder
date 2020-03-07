@@ -44,7 +44,7 @@ public class PreviewTabbedPanel extends JPanel {
             FileReader reader = new FileReader(String.valueOf(path));
             BufferedReader br = new BufferedReader(reader);
             String line = br.readLine();
-            while (line != null ){
+            while (line != null) {
                 textOfFile.append(line + "\n");
                 line = br.readLine();
             }
@@ -65,8 +65,6 @@ public class PreviewTabbedPanel extends JPanel {
     private void addTab() {
         tabbedPane.addTab("Вкладка ", new JScrollPane(textOfFile));
     }
-
-
 
 
 }

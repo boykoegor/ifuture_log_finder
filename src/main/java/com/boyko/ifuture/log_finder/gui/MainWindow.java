@@ -4,13 +4,11 @@ import com.boyko.ifuture.log_finder.EventListener;
 import com.boyko.ifuture.log_finder.EventListener2;
 
 import javax.swing.*;
-import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
 
     private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
-//    private TreePanel tree = new TreePanel();
     private PreviewTabbedPanel tabbedPanel = new PreviewTabbedPanel();
 
 

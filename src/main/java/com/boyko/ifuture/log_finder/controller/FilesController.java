@@ -52,7 +52,7 @@ public class FilesController {
     }
 
     private static boolean isAppropriate(File file, String extension, String content) {
-            return  checkExtension(file, extension) && checkContent(file, content);
+        return checkExtension(file, extension) && checkContent(file, content);
     }
 
     private static boolean checkContent(File file, String content) {
