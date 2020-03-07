@@ -45,7 +45,7 @@ public class TreePanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             TreePath pathOfFile = tree.getPathForLocation(e.getX(), e.getY());
-            if (pathOfFile.getLastPathComponent().toString().endsWith(ext)) {
+            if ((pathOfFile != null) && pathOfFile.getLastPathComponent().toString().endsWith(ext)) {
                 Object[] path = pathOfFile.getPath();
                 StringBuffer sb = new StringBuffer();
                 for (int i = 2; i < path.length; i++) {
