@@ -21,23 +21,11 @@ public class PreviewTabbedPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(500, 400));
 
+
         add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    FileReader reader = new FileReader("/Users/boyko.e.r/IdeaProjects/ifuture_log_finder/src/main/java/com/boyko/ifuture/log_finder/gui/MainWindow.java");
-                    BufferedReader br = new BufferedReader(reader);
-                    String line = br.readLine();
-                    while (line != null ){
-                        textOfFile.append(line + "\n");
-                        line = br.readLine();
-                    }
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                addTab();
+//               showFile("/Users/boyko.e.r/IdeaProjects/ifuture_log_finder/src/main/java/com/boyko/ifuture/log_finder/gui/MainWindow.java");
             }
         });
         remove.addActionListener(e -> removeTab());
@@ -48,6 +36,23 @@ public class PreviewTabbedPanel extends JPanel {
 
         this.add(buttons, BorderLayout.SOUTH);
         this.add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    public void showFile(String path) {
+        addTab();
+        try {
+            FileReader reader = new FileReader(String.valueOf(path));
+            BufferedReader br = new BufferedReader(reader);
+            String line = br.readLine();
+            while (line != null ){
+                textOfFile.append(line + "\n");
+                line = br.readLine();
+            }
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void removeTab() {

@@ -1,5 +1,6 @@
 package com.boyko.ifuture.log_finder.gui;
 
+import com.boyko.ifuture.log_finder.EventListener2;
 import com.boyko.ifuture.log_finder.controller.FilesController;
 
 import javax.swing.*;
@@ -10,10 +11,15 @@ import java.awt.event.MouseListener;
 
 public class TreePanel extends JPanel implements MouseListener {
     private JTree tree;
+    private EventListener2 listener2;
+    private String rootPath;
+    private String ext;
 
     public void refresh(String path, String extension, String content) {
         tree.setModel(FilesController.getTreeFiles(path, extension, content));
         System.out.println("nice");
+        rootPath = path;
+        ext = extension;
     }
 
     public TreePanel() {
@@ -30,12 +36,26 @@ public class TreePanel extends JPanel implements MouseListener {
         tree.addMouseListener(this);
     }
 
+    public TreePanel(EventListener2 listener) {
+        this();
+        this.listener2 = listener;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            TreePath path = tree.getPathForLocation(e.getX(), e.getY());
-            if (path != null) {
-                System.out.println(path.getLastPathComponent().toString());
+            TreePath pathOfFile = tree.getPathForLocation(e.getX(), e.getY());
+            if (pathOfFile.getLastPathComponent().toString().endsWith(ext)) {
+                Object[] path = pathOfFile.getPath();
+                StringBuffer sb = new StringBuffer();
+                for (int i = 2; i < path.length; i++) {
+                    if (i != path.length - 1)
+                        sb.append(path[i] + "/");
+                    else
+                        sb.append(path[i]);
+                }
+                listener2.onClickDo(rootPath + "/" + sb);
+
             }
         }
     }

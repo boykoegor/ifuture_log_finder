@@ -1,20 +1,31 @@
 package com.boyko.ifuture.log_finder.gui;
 
 import com.boyko.ifuture.log_finder.EventListener;
+import com.boyko.ifuture.log_finder.EventListener2;
 
 import javax.swing.*;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
 
     private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
-    private TreePanel tree = new TreePanel();
+//    private TreePanel tree = new TreePanel();
+    private PreviewTabbedPanel tabbedPanel = new PreviewTabbedPanel();
 
 
     public MainWindow() {
         super("Поисковик текста");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowAtCenter();
+
+        EventListener2 listener2 = new EventListener2() {
+            @Override
+            public void onClickDo(String path) {
+                tabbedPanel.showFile(path);
+            }
+        };
+        TreePanel tree = new TreePanel(listener2);
 
         JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
@@ -24,8 +35,10 @@ public class MainWindow extends JFrame {
                 tree.refresh(path, extension, content);
             }
         };
+
+
         panel.setLeftComponent(tree);
-        panel.setRightComponent(new PreviewTabbedPanel());
+        panel.setRightComponent(tabbedPanel);
 
         Container window = this.getContentPane();
         window.add(new TopPanel(listener), BorderLayout.NORTH);
