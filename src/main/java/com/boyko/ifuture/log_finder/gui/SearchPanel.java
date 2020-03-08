@@ -1,11 +1,12 @@
 package com.boyko.ifuture.log_finder.gui;
 
+import com.boyko.ifuture.log_finder.SearchListener;
+
 import javax.swing.*;
-import java.io.File;
 
-public class TopPanel extends JPanel {
+public class SearchPanel extends JPanel {
 
-    private File selectedFile;
+    private SearchListener listener;
     private JLabel selectedPath = new JLabel("Путь не указан");
     private JLabel fileFormatLabel = new JLabel("Формат файла");
     private JLabel textLabel = new JLabel("Текст:");
@@ -15,16 +16,16 @@ public class TopPanel extends JPanel {
     private JButton path = new JButton("...");
     private JButton search = new JButton("Искать");
 
-    public TopPanel() {
-
+    public SearchPanel() {
         path.addActionListener(e -> selectPath(selectedPath));
-        search.addActionListener(e -> {
-            if (selectedFile != null) {
-
-            }
-        });
-
+        search.addActionListener(e -> listener.onSearchActivated(selectedPath.getText(), fileFormat.getText(),
+                text.getText()));
         place();
+    }
+
+    public SearchPanel(SearchListener listener) {
+        this();
+        this.listener = listener;
     }
 
     private void place() {
@@ -73,7 +74,6 @@ public class TopPanel extends JPanel {
         switch (reply) {
             case JFileChooser.APPROVE_OPTION:
                 selectedPath.setText(wayChooser.getSelectedFile().toString());
-                selectedFile = wayChooser.getSelectedFile();
                 break;
             case JFileChooser.CANCEL_OPTION:
                 break;
