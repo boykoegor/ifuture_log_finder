@@ -65,6 +65,4 @@ public class PreviewTabbedPanel extends JPanel {
     private void addTab() {
         tabbedPane.addTab("Вкладка ", new JScrollPane(textOfFile));
     }
-
-
 }

@@ -55,7 +55,6 @@ public class TreePanel extends JPanel implements MouseListener {
                         sb.append(path[i]);
                 }
                 listener2.onClickDo(rootPath + "/" + sb);
-
             }
         }
     }

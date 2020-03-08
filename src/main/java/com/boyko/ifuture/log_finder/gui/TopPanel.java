@@ -19,7 +19,6 @@ public class TopPanel extends JPanel {
     private JButton search = new JButton("Искать");
 
     public TopPanel() {
-
         path.addActionListener(e -> selectPath(selectedPath));
         search.addActionListener(e -> listener.onSearchActivated(selectedPath.getText(), fileFormat.getText(),
                 text.getText()));

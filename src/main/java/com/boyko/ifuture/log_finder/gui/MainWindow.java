@@ -11,7 +11,6 @@ public class MainWindow extends JFrame {
     private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
     private PreviewTabbedPanel tabbedPanel = new PreviewTabbedPanel();
 
-
     public MainWindow() {
         super("Поисковик текста");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +32,6 @@ public class MainWindow extends JFrame {
                 tree.refresh(path, extension, content);
             }
         };
-
 
         panel.setLeftComponent(tree);
         panel.setRightComponent(tabbedPanel);
