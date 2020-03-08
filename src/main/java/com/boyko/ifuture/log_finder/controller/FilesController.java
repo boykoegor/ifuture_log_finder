@@ -1,9 +1,8 @@
 package com.boyko.ifuture.log_finder.controller;
 
+import com.boyko.ifuture.log_finder.model.FileInfo;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import java.io.File;
@@ -15,14 +14,14 @@ public class FilesController {
     private final static Logger logger = Logger.getLogger(FilesController.class);
 
     public static TreeModel getTreeFiles(String filePath, String extension, String content) {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Main node");
+        FileNode root = new FileNode(new FileInfo("Main node", filePath));
         addNodes(root, filePath, extension, content);
         return new DefaultTreeModel(root);
     }
 
-    private static boolean addNodes(DefaultMutableTreeNode node, String filePath, String extension, String content) {
+    private static boolean addNodes(FileNode node, String filePath, String extension, String content) {
         File file = new File(filePath);
-        DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(file.getName());
+        FileNode newChild = new FileNode(new FileInfo (file.getName(), file.getPath()));
         if (file.isDirectory()) {
             try {
                 boolean haveAppropriateFiles = false;
@@ -32,7 +31,6 @@ public class FilesController {
                     }
                 }
                 if (haveAppropriateFiles) {
-//                    System.out.println("need this dir  " + filePath);
                     node.add(newChild);
                     return true;
                 }
@@ -41,11 +39,8 @@ public class FilesController {
             }
         } else {
             if (isAppropriate(file, extension, content)) {
-//                System.out.println("appropriate file = " + file.getName());
                 node.add(newChild);
                 return true;
-            } else {
-                return false;
             }
         }
         return false;

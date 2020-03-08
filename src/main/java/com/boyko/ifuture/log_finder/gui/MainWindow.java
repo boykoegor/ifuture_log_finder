@@ -1,7 +1,7 @@
 package com.boyko.ifuture.log_finder.gui;
 
-import com.boyko.ifuture.log_finder.EventListener;
-import com.boyko.ifuture.log_finder.EventListener2;
+import com.boyko.ifuture.log_finder.SearchListener;
+import com.boyko.ifuture.log_finder.TreeListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,35 +9,28 @@ import java.awt.*;
 public class MainWindow extends JFrame {
 
     private static final Dimension WINDOW_SIZE = new Dimension(800, 600);
-    private PreviewTabbedPanel tabbedPanel = new PreviewTabbedPanel();
 
     public MainWindow() {
         super("Поисковик текста");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setWindowAtCenter();
 
-        EventListener2 listener2 = new EventListener2() {
-            @Override
-            public void onClickDo(String path) {
-                tabbedPanel.showFile(path);
-            }
-        };
-        TreePanel tree = new TreePanel(listener2);
+        PreviewTabbedPanel tabbedPanel = new PreviewTabbedPanel();
+        TreeListener treeListener = fileInfo -> tabbedPanel.showFile(fileInfo);
+        TreePanel tree = new TreePanel(treeListener);
 
         JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
-        EventListener listener = new EventListener() {
-            @Override
-            public void onSearchActivated(String path, String extension, String content) {
-                tree.refresh(path, extension, content);
-            }
+        SearchListener searchListener = (path, extension, content) -> {
+            tree.refresh(path, extension, content);
+            tabbedPanel.refresh();
         };
 
         panel.setLeftComponent(tree);
         panel.setRightComponent(tabbedPanel);
 
         Container window = this.getContentPane();
-        window.add(new TopPanel(listener), BorderLayout.NORTH);
+        window.add(new SearchPanel(searchListener), BorderLayout.NORTH);
         window.add(panel, BorderLayout.CENTER);
     }
 
